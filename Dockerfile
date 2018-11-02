@@ -9,7 +9,7 @@ ENV GO15VENDOREXPERIMENT 1
 
 ENV PATH /srv/app/bin:/usr/local/go/bin:${PATH}
 
-ENV GOLANG_VERSION 1.8.1
+ENV GOLANG_VERSION 1.11.1
 ENV GOLANG_TARBALL https://golang.org/dl/go$GOLANG_VERSION.src.tar.gz
 
 ADD rootfs /
@@ -29,7 +29,9 @@ RUN apk update && \
   cd \
     /usr/local/go/src && \
   patch -p2 -i \
-    /tmp/no-pic.patch && \
+    /tmp/default-buildmode-pie.patch && \
+  patch -p2 -i \
+    /tmp/set-external-linker.patch && \
   bash \
     make.bash && \
   apk del \
