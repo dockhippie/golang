@@ -5,7 +5,7 @@ WORKDIR /srv/app
 CMD ["bash"]
 
 ENV GOPATH /srv/app
-ENV GO15VENDOREXPERIMENT 1
+ENV GO111MODULE 1
 
 ENV PATH /srv/app/bin:/usr/local/go/bin:${PATH}
 
@@ -15,6 +15,7 @@ ENV GOLANG_TARBALL https://golang.org/dl/go$GOLANG_VERSION.src.tar.gz
 ADD rootfs /
 
 RUN apk update && \
+  apk upgrade && \
   apk add \
     build-base \
     git \
