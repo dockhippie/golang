@@ -1,0 +1,28 @@
+FROM webhippie/alpine:latest-arm32v6
+
+LABEL maintainer="Thomas Boerger <thomas@webhippie.de>" \
+  org.label-schema.name="Golang" \
+  org.label-schema.vcs-url="https://github.com/dockhippie/golang.git" \
+  org.label-schema.vendor="Thomas Boerger" \
+  org.label-schema.schema-version="1.0"
+
+WORKDIR /srv/app
+ENTRYPOINT ["/usr/bin/entrypoint"]
+CMD ["bash"]
+
+ENV GOPATH /srv/app
+ENV GO111MODULE auto
+ENV PATH /srv/app/bin:/usr/local/go/bin:${PATH}
+
+COPY ./overlay ./overlay-arm32v6 /
+
+RUN apk update && \
+  apk upgrade && \
+  apk add build-base git git-lfs mercurial bzr go && \
+  export GOROOT_BOOTSTRAP="$(go env GOROOT)" && \
+  curl -sLo - https://golang.org/dl/go1.7.6.src.tar.gz | tar -xzf - -C /usr/local && \
+  cd /usr/local/go/src && \
+  patch -p2 -i /tmp/default-buildmode-pie.patch && \
+  bash make.bash && \
+  apk del go && \
+  rm -rf /var/cache/apk/*

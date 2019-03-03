@@ -1,5 +1,6 @@
 # Golang
 
+[![Build Status](https://cloud.drone.io/api/badges/dockhippie/golang/status.svg)](https://cloud.drone.io/dockhippie/golang)
 [![](https://images.microbadger.com/badges/image/webhippie/golang.svg)](https://microbadger.com/images/webhippie/golang "Get your own image badge on microbadger.com")
 
 These are docker images for [Golang](https://golang.org/) running on an [Alpine Linux container](https://registry.hub.docker.com/u/webhippie/alpine/).
@@ -7,7 +8,13 @@ These are docker images for [Golang](https://golang.org/) running on an [Alpine 
 
 ## Versions
 
-To get an overview about the available versions please take a look at the [GitHub branches](https://github.com/dockhippie/golang/branches/all) or our [Docker Hub tags](https://hub.docker.com/r/webhippie/golang/tags/), these lists are always up to date.
+* [latest](./latest) available as `webhippie/golang:latest`
+* [latest](./1.11) available as `webhippie/golang:1.11`
+* [latest](./1.10) available as `webhippie/golang:1.10`
+* [latest](./1.9) available as `webhippie/golang:1.9`
+* [latest](./1.8) available as `webhippie/golang:1.8`
+* [latest](./1.7) available as `webhippie/golang:1.7`
+* [latest](./1.6) available as `webhippie/golang:1.6`
 
 
 ## Volumes
@@ -50,5 +57,5 @@ MIT
 ## Copyright
 
 ```
-Copyright (c) 2015-2017 Thomas Boerger <http://www.webhippie.de>
+Copyright (c) 2015 Thomas Boerger <http://www.webhippie.de>
 ```
