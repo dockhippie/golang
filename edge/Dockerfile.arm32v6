@@ -11,19 +11,12 @@ ENTRYPOINT ["/usr/bin/entrypoint"]
 CMD ["bash"]
 
 ENV GOPATH /srv/app
-ENV PATH /srv/app/bin:/usr/local/go/bin:${PATH}
+ENV PATH /srv/app/bin:${PATH}
 ENV GO111MODULE auto
-
-COPY ./overlay ./overlay-arm32v6 /
 
 RUN apk update && \
   apk upgrade && \
-  apk add build-base git git-lfs mercurial bzr go && \
-  export GOROOT_BOOTSTRAP="$(go env GOROOT)" && \
-  curl -sLo - https://golang.org/dl/go1.12.src.tar.gz | tar -xzf - -C /usr/local && \
-  cd /usr/local/go/src && \
-  patch -p2 -i /tmp/default-buildmode-pie.patch && \
-  patch -p2 -i /tmp/set-external-linker.patch && \
-  bash make.bash && \
-  apk del go && \
+  apk add build-base git git-lfs mercurial bzr go openssh-client && \
   rm -rf /var/cache/apk/*
+
+COPY ./overlay ./overlay-arm32v6 /
