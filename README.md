@@ -9,12 +9,14 @@ These are docker images for [Golang](https://golang.org/) running on an [Alpine 
 ## Versions
 
 * [latest](./latest) available as `webhippie/golang:latest`
+* [latest](./1.12) available as `webhippie/golang:1.12`
 * [latest](./1.11) available as `webhippie/golang:1.11`
 * [latest](./1.10) available as `webhippie/golang:1.10`
 * [latest](./1.9) available as `webhippie/golang:1.9`
 * [latest](./1.8) available as `webhippie/golang:1.8`
 * [latest](./1.7) available as `webhippie/golang:1.7`
 * [latest](./1.6) available as `webhippie/golang:1.6`
+* [latest](./edge) available as `webhippie/golang:edge`
 
 
 ## Volumes

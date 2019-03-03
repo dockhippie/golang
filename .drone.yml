@@ -301,7 +301,7 @@ steps:
     ignore_missing: true
     password:
       from_secret: docker_password
-    spec: 1.12/manifest.tmpl
+    spec: v1.12/manifest.tmpl
     username:
       from_secret: docker_username
 
@@ -459,7 +459,7 @@ steps:
     ignore_missing: true
     password:
       from_secret: docker_password
-    spec: 1.11/manifest.tmpl
+    spec: v1.11/manifest.tmpl
     username:
       from_secret: docker_username
 
@@ -617,7 +617,7 @@ steps:
     ignore_missing: true
     password:
       from_secret: docker_password
-    spec: 1.10/manifest.tmpl
+    spec: v1.10/manifest.tmpl
     username:
       from_secret: docker_username
 
@@ -775,7 +775,7 @@ steps:
     ignore_missing: true
     password:
       from_secret: docker_password
-    spec: 1.9/manifest.tmpl
+    spec: v1.9/manifest.tmpl
     username:
       from_secret: docker_username
 
@@ -933,7 +933,7 @@ steps:
     ignore_missing: true
     password:
       from_secret: docker_password
-    spec: 1.8/manifest.tmpl
+    spec: v1.8/manifest.tmpl
     username:
       from_secret: docker_username
 
@@ -1091,7 +1091,7 @@ steps:
     ignore_missing: true
     password:
       from_secret: docker_password
-    spec: 1.7/manifest.tmpl
+    spec: v1.7/manifest.tmpl
     username:
       from_secret: docker_username
 
@@ -1249,7 +1249,7 @@ steps:
     ignore_missing: true
     password:
       from_secret: docker_password
-    spec: 1.6/manifest.tmpl
+    spec: v1.6/manifest.tmpl
     username:
       from_secret: docker_username
 
@@ -1261,6 +1261,164 @@ depends_on:
 - amd64-1.6
 - arm32v6-1.6
 - arm64v8-1.6
+
+---
+kind: pipeline
+name: amd64-edge
+
+platform:
+  os: linux
+  arch: amd64
+
+steps:
+- name: dryrun
+  pull: always
+  image: plugins/docker:latest
+  settings:
+    context: edge
+    dockerfile: edge/Dockerfile.amd64
+    dry_run: true
+    repo: webhippie/golang
+    tags: edge-amd64
+  when:
+    event:
+    - pull_request
+
+- name: publish
+  pull: always
+  image: plugins/docker:latest
+  settings:
+    context: edge
+    dockerfile: edge/Dockerfile.amd64
+    password:
+      from_secret: docker_password
+    repo: webhippie/golang
+    tags: edge-amd64
+    username:
+      from_secret: docker_username
+  when:
+    event:
+    - push
+
+trigger:
+  ref:
+  - refs/heads/master
+  - "refs/pull/**"
+
+---
+kind: pipeline
+name: arm32v6-edge
+
+platform:
+  os: linux
+  arch: arm
+
+steps:
+- name: dryrun
+  pull: always
+  image: plugins/docker:latest
+  settings:
+    context: edge
+    dockerfile: edge/Dockerfile.arm32v6
+    dry_run: true
+    repo: webhippie/golang
+    tags: edge-arm32v6
+  when:
+    event:
+    - pull_request
+
+- name: publish
+  pull: always
+  image: plugins/docker:latest
+  settings:
+    context: edge
+    dockerfile: edge/Dockerfile.arm32v6
+    password:
+      from_secret: docker_password
+    repo: webhippie/golang
+    tags: edge-arm32v6
+    username:
+      from_secret: docker_username
+  when:
+    event:
+    - push
+
+trigger:
+  ref:
+  - refs/heads/master
+  - "refs/pull/**"
+
+---
+kind: pipeline
+name: arm64v8-edge
+
+platform:
+  os: linux
+  arch: arm64
+
+steps:
+- name: dryrun
+  pull: always
+  image: plugins/docker:latest
+  settings:
+    context: edge
+    dockerfile: edge/Dockerfile.arm64v8
+    dry_run: true
+    repo: webhippie/golang
+    tags: edge-arm64v8
+  when:
+    event:
+    - pull_request
+
+- name: publish
+  pull: always
+  image: plugins/docker:latest
+  settings:
+    context: edge
+    dockerfile: edge/Dockerfile.arm64v8
+    password:
+      from_secret: docker_password
+    repo: webhippie/golang
+    tags: edge-arm64v8
+    username:
+      from_secret: docker_username
+  when:
+    event:
+    - push
+
+trigger:
+  ref:
+  - refs/heads/master
+  - "refs/pull/**"
+
+---
+kind: pipeline
+name: manifest-edge
+
+platform:
+  os: linux
+  arch: amd64
+
+steps:
+- name: manifest
+  pull: always
+  image: plugins/manifest:1
+  settings:
+    ignore_missing: true
+    password:
+      from_secret: docker_password
+    spec: edge/manifest.tmpl
+    username:
+      from_secret: docker_username
+
+trigger:
+  ref:
+  - refs/heads/master
+
+depends_on:
+- amd64-edge
+- arm32v6-edge
+- arm64v8-edge
 
 ---
 kind: pipeline
@@ -1291,5 +1449,6 @@ depends_on:
 - manifest-1.8
 - manifest-1.7
 - manifest-1.6
+- manifest-edge
 
 ...
