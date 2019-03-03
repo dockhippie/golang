@@ -1,0 +1,1295 @@
+---
+kind: pipeline
+name: amd64-latest
+
+platform:
+  os: linux
+  arch: amd64
+
+steps:
+- name: dryrun
+  pull: always
+  image: plugins/docker:latest
+  settings:
+    context: latest
+    dockerfile: latest/Dockerfile.amd64
+    dry_run: true
+    repo: webhippie/golang
+    tags: latest-amd64
+  when:
+    event:
+    - pull_request
+
+- name: publish
+  pull: always
+  image: plugins/docker:latest
+  settings:
+    context: latest
+    dockerfile: latest/Dockerfile.amd64
+    password:
+      from_secret: docker_password
+    repo: webhippie/golang
+    tags: latest-amd64
+    username:
+      from_secret: docker_username
+  when:
+    event:
+    - push
+
+trigger:
+  ref:
+  - refs/heads/master
+  - "refs/pull/**"
+
+---
+kind: pipeline
+name: arm32v6-latest
+
+platform:
+  os: linux
+  arch: arm
+
+steps:
+- name: dryrun
+  pull: always
+  image: plugins/docker:latest
+  settings:
+    context: latest
+    dockerfile: latest/Dockerfile.arm32v6
+    dry_run: true
+    repo: webhippie/golang
+    tags: latest-arm32v6
+  when:
+    event:
+    - pull_request
+
+- name: publish
+  pull: always
+  image: plugins/docker:latest
+  settings:
+    context: latest
+    dockerfile: latest/Dockerfile.arm32v6
+    password:
+      from_secret: docker_password
+    repo: webhippie/golang
+    tags: latest-arm32v6
+    username:
+      from_secret: docker_username
+  when:
+    event:
+    - push
+
+trigger:
+  ref:
+  - refs/heads/master
+  - "refs/pull/**"
+
+---
+kind: pipeline
+name: arm64v8-latest
+
+platform:
+  os: linux
+  arch: arm64
+
+steps:
+- name: dryrun
+  pull: always
+  image: plugins/docker:latest
+  settings:
+    context: latest
+    dockerfile: latest/Dockerfile.arm64v8
+    dry_run: true
+    repo: webhippie/golang
+    tags: latest-arm64v8
+  when:
+    event:
+    - pull_request
+
+- name: publish
+  pull: always
+  image: plugins/docker:latest
+  settings:
+    context: latest
+    dockerfile: latest/Dockerfile.arm64v8
+    password:
+      from_secret: docker_password
+    repo: webhippie/golang
+    tags: latest-arm64v8
+    username:
+      from_secret: docker_username
+  when:
+    event:
+    - push
+
+trigger:
+  ref:
+  - refs/heads/master
+  - "refs/pull/**"
+
+---
+kind: pipeline
+name: manifest-latest
+
+platform:
+  os: linux
+  arch: amd64
+
+steps:
+- name: manifest
+  pull: always
+  image: plugins/manifest:1
+  settings:
+    ignore_missing: true
+    password:
+      from_secret: docker_password
+    spec: latest/manifest.tmpl
+    username:
+      from_secret: docker_username
+
+trigger:
+  ref:
+  - refs/heads/master
+
+depends_on:
+- amd64-latest
+- arm32v6-latest
+- arm64v8-latest
+
+---
+kind: pipeline
+name: amd64-1.12
+
+platform:
+  os: linux
+  arch: amd64
+
+steps:
+- name: dryrun
+  pull: always
+  image: plugins/docker:latest
+  settings:
+    context: v1.12
+    dockerfile: v1.12/Dockerfile.amd64
+    dry_run: true
+    repo: webhippie/golang
+    tags: 1.12-amd64
+  when:
+    event:
+    - pull_request
+
+- name: publish
+  pull: always
+  image: plugins/docker:latest
+  settings:
+    context: v1.12
+    dockerfile: v1.12/Dockerfile.amd64
+    password:
+      from_secret: docker_password
+    repo: webhippie/golang
+    tags: 1.12-amd64
+    username:
+      from_secret: docker_username
+  when:
+    event:
+    - push
+
+trigger:
+  ref:
+  - refs/heads/master
+  - "refs/pull/**"
+
+---
+kind: pipeline
+name: arm32v6-1.12
+
+platform:
+  os: linux
+  arch: arm
+
+steps:
+- name: dryrun
+  pull: always
+  image: plugins/docker:latest
+  settings:
+    context: v1.12
+    dockerfile: v1.12/Dockerfile.arm32v6
+    dry_run: true
+    repo: webhippie/golang
+    tags: 1.12-arm32v6
+  when:
+    event:
+    - pull_request
+
+- name: publish
+  pull: always
+  image: plugins/docker:latest
+  settings:
+    context: v1.12
+    dockerfile: v1.12/Dockerfile.arm32v6
+    password:
+      from_secret: docker_password
+    repo: webhippie/golang
+    tags: 1.12-arm32v6
+    username:
+      from_secret: docker_username
+  when:
+    event:
+    - push
+
+trigger:
+  ref:
+  - refs/heads/master
+  - "refs/pull/**"
+
+---
+kind: pipeline
+name: arm64v8-1.12
+
+platform:
+  os: linux
+  arch: arm64
+
+steps:
+- name: dryrun
+  pull: always
+  image: plugins/docker:latest
+  settings:
+    context: v1.12
+    dockerfile: v1.12/Dockerfile.arm64v8
+    dry_run: true
+    repo: webhippie/golang
+    tags: 1.12-arm64v8
+  when:
+    event:
+    - pull_request
+
+- name: publish
+  pull: always
+  image: plugins/docker:latest
+  settings:
+    context: v1.12
+    dockerfile: v1.12/Dockerfile.arm64v8
+    password:
+      from_secret: docker_password
+    repo: webhippie/golang
+    tags: 1.12-arm64v8
+    username:
+      from_secret: docker_username
+  when:
+    event:
+    - push
+
+trigger:
+  ref:
+  - refs/heads/master
+  - "refs/pull/**"
+
+---
+kind: pipeline
+name: manifest-1.12
+
+platform:
+  os: linux
+  arch: amd64
+
+steps:
+- name: manifest
+  pull: always
+  image: plugins/manifest:1
+  settings:
+    ignore_missing: true
+    password:
+      from_secret: docker_password
+    spec: 1.12/manifest.tmpl
+    username:
+      from_secret: docker_username
+
+trigger:
+  ref:
+  - refs/heads/master
+
+depends_on:
+- amd64-1.12
+- arm32v6-1.12
+- arm64v8-1.12
+
+---
+kind: pipeline
+name: amd64-1.11
+
+platform:
+  os: linux
+  arch: amd64
+
+steps:
+- name: dryrun
+  pull: always
+  image: plugins/docker:latest
+  settings:
+    context: v1.11
+    dockerfile: v1.11/Dockerfile.amd64
+    dry_run: true
+    repo: webhippie/golang
+    tags: 1.11-amd64
+  when:
+    event:
+    - pull_request
+
+- name: publish
+  pull: always
+  image: plugins/docker:latest
+  settings:
+    context: v1.11
+    dockerfile: v1.11/Dockerfile.amd64
+    password:
+      from_secret: docker_password
+    repo: webhippie/golang
+    tags: 1.11-amd64
+    username:
+      from_secret: docker_username
+  when:
+    event:
+    - push
+
+trigger:
+  ref:
+  - refs/heads/master
+  - "refs/pull/**"
+
+---
+kind: pipeline
+name: arm32v6-1.11
+
+platform:
+  os: linux
+  arch: arm
+
+steps:
+- name: dryrun
+  pull: always
+  image: plugins/docker:latest
+  settings:
+    context: v1.11
+    dockerfile: v1.11/Dockerfile.arm32v6
+    dry_run: true
+    repo: webhippie/golang
+    tags: 1.11-arm32v6
+  when:
+    event:
+    - pull_request
+
+- name: publish
+  pull: always
+  image: plugins/docker:latest
+  settings:
+    context: v1.11
+    dockerfile: v1.11/Dockerfile.arm32v6
+    password:
+      from_secret: docker_password
+    repo: webhippie/golang
+    tags: 1.11-arm32v6
+    username:
+      from_secret: docker_username
+  when:
+    event:
+    - push
+
+trigger:
+  ref:
+  - refs/heads/master
+  - "refs/pull/**"
+
+---
+kind: pipeline
+name: arm64v8-1.11
+
+platform:
+  os: linux
+  arch: arm64
+
+steps:
+- name: dryrun
+  pull: always
+  image: plugins/docker:latest
+  settings:
+    context: v1.11
+    dockerfile: v1.11/Dockerfile.arm64v8
+    dry_run: true
+    repo: webhippie/golang
+    tags: 1.11-arm64v8
+  when:
+    event:
+    - pull_request
+
+- name: publish
+  pull: always
+  image: plugins/docker:latest
+  settings:
+    context: v1.11
+    dockerfile: v1.11/Dockerfile.arm64v8
+    password:
+      from_secret: docker_password
+    repo: webhippie/golang
+    tags: 1.11-arm64v8
+    username:
+      from_secret: docker_username
+  when:
+    event:
+    - push
+
+trigger:
+  ref:
+  - refs/heads/master
+  - "refs/pull/**"
+
+---
+kind: pipeline
+name: manifest-1.11
+
+platform:
+  os: linux
+  arch: amd64
+
+steps:
+- name: manifest
+  pull: always
+  image: plugins/manifest:1
+  settings:
+    ignore_missing: true
+    password:
+      from_secret: docker_password
+    spec: 1.11/manifest.tmpl
+    username:
+      from_secret: docker_username
+
+trigger:
+  ref:
+  - refs/heads/master
+
+depends_on:
+- amd64-1.11
+- arm32v6-1.11
+- arm64v8-1.11
+
+---
+kind: pipeline
+name: amd64-1.10
+
+platform:
+  os: linux
+  arch: amd64
+
+steps:
+- name: dryrun
+  pull: always
+  image: plugins/docker:latest
+  settings:
+    context: v1.10
+    dockerfile: v1.10/Dockerfile.amd64
+    dry_run: true
+    repo: webhippie/golang
+    tags: 1.10-amd64
+  when:
+    event:
+    - pull_request
+
+- name: publish
+  pull: always
+  image: plugins/docker:latest
+  settings:
+    context: v1.10
+    dockerfile: v1.10/Dockerfile.amd64
+    password:
+      from_secret: docker_password
+    repo: webhippie/golang
+    tags: 1.10-amd64
+    username:
+      from_secret: docker_username
+  when:
+    event:
+    - push
+
+trigger:
+  ref:
+  - refs/heads/master
+  - "refs/pull/**"
+
+---
+kind: pipeline
+name: arm32v6-1.10
+
+platform:
+  os: linux
+  arch: arm
+
+steps:
+- name: dryrun
+  pull: always
+  image: plugins/docker:latest
+  settings:
+    context: v1.10
+    dockerfile: v1.10/Dockerfile.arm32v6
+    dry_run: true
+    repo: webhippie/golang
+    tags: 1.10-arm32v6
+  when:
+    event:
+    - pull_request
+
+- name: publish
+  pull: always
+  image: plugins/docker:latest
+  settings:
+    context: v1.10
+    dockerfile: v1.10/Dockerfile.arm32v6
+    password:
+      from_secret: docker_password
+    repo: webhippie/golang
+    tags: 1.10-arm32v6
+    username:
+      from_secret: docker_username
+  when:
+    event:
+    - push
+
+trigger:
+  ref:
+  - refs/heads/master
+  - "refs/pull/**"
+
+---
+kind: pipeline
+name: arm64v8-1.10
+
+platform:
+  os: linux
+  arch: arm64
+
+steps:
+- name: dryrun
+  pull: always
+  image: plugins/docker:latest
+  settings:
+    context: v1.10
+    dockerfile: v1.10/Dockerfile.arm64v8
+    dry_run: true
+    repo: webhippie/golang
+    tags: 1.10-arm64v8
+  when:
+    event:
+    - pull_request
+
+- name: publish
+  pull: always
+  image: plugins/docker:latest
+  settings:
+    context: v1.10
+    dockerfile: v1.10/Dockerfile.arm64v8
+    password:
+      from_secret: docker_password
+    repo: webhippie/golang
+    tags: 1.10-arm64v8
+    username:
+      from_secret: docker_username
+  when:
+    event:
+    - push
+
+trigger:
+  ref:
+  - refs/heads/master
+  - "refs/pull/**"
+
+---
+kind: pipeline
+name: manifest-1.10
+
+platform:
+  os: linux
+  arch: amd64
+
+steps:
+- name: manifest
+  pull: always
+  image: plugins/manifest:1
+  settings:
+    ignore_missing: true
+    password:
+      from_secret: docker_password
+    spec: 1.10/manifest.tmpl
+    username:
+      from_secret: docker_username
+
+trigger:
+  ref:
+  - refs/heads/master
+
+depends_on:
+- amd64-1.10
+- arm32v6-1.10
+- arm64v8-1.10
+
+---
+kind: pipeline
+name: amd64-1.9
+
+platform:
+  os: linux
+  arch: amd64
+
+steps:
+- name: dryrun
+  pull: always
+  image: plugins/docker:latest
+  settings:
+    context: v1.9
+    dockerfile: v1.9/Dockerfile.amd64
+    dry_run: true
+    repo: webhippie/golang
+    tags: 1.9-amd64
+  when:
+    event:
+    - pull_request
+
+- name: publish
+  pull: always
+  image: plugins/docker:latest
+  settings:
+    context: v1.9
+    dockerfile: v1.9/Dockerfile.amd64
+    password:
+      from_secret: docker_password
+    repo: webhippie/golang
+    tags: 1.9-amd64
+    username:
+      from_secret: docker_username
+  when:
+    event:
+    - push
+
+trigger:
+  ref:
+  - refs/heads/master
+  - "refs/pull/**"
+
+---
+kind: pipeline
+name: arm32v6-1.9
+
+platform:
+  os: linux
+  arch: arm
+
+steps:
+- name: dryrun
+  pull: always
+  image: plugins/docker:latest
+  settings:
+    context: v1.9
+    dockerfile: v1.9/Dockerfile.arm32v6
+    dry_run: true
+    repo: webhippie/golang
+    tags: 1.9-arm32v6
+  when:
+    event:
+    - pull_request
+
+- name: publish
+  pull: always
+  image: plugins/docker:latest
+  settings:
+    context: v1.9
+    dockerfile: v1.9/Dockerfile.arm32v6
+    password:
+      from_secret: docker_password
+    repo: webhippie/golang
+    tags: 1.9-arm32v6
+    username:
+      from_secret: docker_username
+  when:
+    event:
+    - push
+
+trigger:
+  ref:
+  - refs/heads/master
+  - "refs/pull/**"
+
+---
+kind: pipeline
+name: arm64v8-1.9
+
+platform:
+  os: linux
+  arch: arm64
+
+steps:
+- name: dryrun
+  pull: always
+  image: plugins/docker:latest
+  settings:
+    context: v1.9
+    dockerfile: v1.9/Dockerfile.arm64v8
+    dry_run: true
+    repo: webhippie/golang
+    tags: 1.9-arm64v8
+  when:
+    event:
+    - pull_request
+
+- name: publish
+  pull: always
+  image: plugins/docker:latest
+  settings:
+    context: v1.9
+    dockerfile: v1.9/Dockerfile.arm64v8
+    password:
+      from_secret: docker_password
+    repo: webhippie/golang
+    tags: 1.9-arm64v8
+    username:
+      from_secret: docker_username
+  when:
+    event:
+    - push
+
+trigger:
+  ref:
+  - refs/heads/master
+  - "refs/pull/**"
+
+---
+kind: pipeline
+name: manifest-1.9
+
+platform:
+  os: linux
+  arch: amd64
+
+steps:
+- name: manifest
+  pull: always
+  image: plugins/manifest:1
+  settings:
+    ignore_missing: true
+    password:
+      from_secret: docker_password
+    spec: 1.9/manifest.tmpl
+    username:
+      from_secret: docker_username
+
+trigger:
+  ref:
+  - refs/heads/master
+
+depends_on:
+- amd64-1.9
+- arm32v6-1.9
+- arm64v8-1.9
+
+---
+kind: pipeline
+name: amd64-1.8
+
+platform:
+  os: linux
+  arch: amd64
+
+steps:
+- name: dryrun
+  pull: always
+  image: plugins/docker:latest
+  settings:
+    context: v1.8
+    dockerfile: v1.8/Dockerfile.amd64
+    dry_run: true
+    repo: webhippie/golang
+    tags: 1.8-amd64
+  when:
+    event:
+    - pull_request
+
+- name: publish
+  pull: always
+  image: plugins/docker:latest
+  settings:
+    context: v1.8
+    dockerfile: v1.8/Dockerfile.amd64
+    password:
+      from_secret: docker_password
+    repo: webhippie/golang
+    tags: 1.8-amd64
+    username:
+      from_secret: docker_username
+  when:
+    event:
+    - push
+
+trigger:
+  ref:
+  - refs/heads/master
+  - "refs/pull/**"
+
+---
+kind: pipeline
+name: arm32v6-1.8
+
+platform:
+  os: linux
+  arch: arm
+
+steps:
+- name: dryrun
+  pull: always
+  image: plugins/docker:latest
+  settings:
+    context: v1.8
+    dockerfile: v1.8/Dockerfile.arm32v6
+    dry_run: true
+    repo: webhippie/golang
+    tags: 1.8-arm32v6
+  when:
+    event:
+    - pull_request
+
+- name: publish
+  pull: always
+  image: plugins/docker:latest
+  settings:
+    context: v1.8
+    dockerfile: v1.8/Dockerfile.arm32v6
+    password:
+      from_secret: docker_password
+    repo: webhippie/golang
+    tags: 1.8-arm32v6
+    username:
+      from_secret: docker_username
+  when:
+    event:
+    - push
+
+trigger:
+  ref:
+  - refs/heads/master
+  - "refs/pull/**"
+
+---
+kind: pipeline
+name: arm64v8-1.8
+
+platform:
+  os: linux
+  arch: arm64
+
+steps:
+- name: dryrun
+  pull: always
+  image: plugins/docker:latest
+  settings:
+    context: v1.8
+    dockerfile: v1.8/Dockerfile.arm64v8
+    dry_run: true
+    repo: webhippie/golang
+    tags: 1.8-arm64v8
+  when:
+    event:
+    - pull_request
+
+- name: publish
+  pull: always
+  image: plugins/docker:latest
+  settings:
+    context: v1.8
+    dockerfile: v1.8/Dockerfile.arm64v8
+    password:
+      from_secret: docker_password
+    repo: webhippie/golang
+    tags: 1.8-arm64v8
+    username:
+      from_secret: docker_username
+  when:
+    event:
+    - push
+
+trigger:
+  ref:
+  - refs/heads/master
+  - "refs/pull/**"
+
+---
+kind: pipeline
+name: manifest-1.8
+
+platform:
+  os: linux
+  arch: amd64
+
+steps:
+- name: manifest
+  pull: always
+  image: plugins/manifest:1
+  settings:
+    ignore_missing: true
+    password:
+      from_secret: docker_password
+    spec: 1.8/manifest.tmpl
+    username:
+      from_secret: docker_username
+
+trigger:
+  ref:
+  - refs/heads/master
+
+depends_on:
+- amd64-1.8
+- arm32v6-1.8
+- arm64v8-1.8
+
+---
+kind: pipeline
+name: amd64-1.7
+
+platform:
+  os: linux
+  arch: amd64
+
+steps:
+- name: dryrun
+  pull: always
+  image: plugins/docker:latest
+  settings:
+    context: v1.7
+    dockerfile: v1.7/Dockerfile.amd64
+    dry_run: true
+    repo: webhippie/golang
+    tags: 1.7-amd64
+  when:
+    event:
+    - pull_request
+
+- name: publish
+  pull: always
+  image: plugins/docker:latest
+  settings:
+    context: v1.7
+    dockerfile: v1.7/Dockerfile.amd64
+    password:
+      from_secret: docker_password
+    repo: webhippie/golang
+    tags: 1.7-amd64
+    username:
+      from_secret: docker_username
+  when:
+    event:
+    - push
+
+trigger:
+  ref:
+  - refs/heads/master
+  - "refs/pull/**"
+
+---
+kind: pipeline
+name: arm32v6-1.7
+
+platform:
+  os: linux
+  arch: arm
+
+steps:
+- name: dryrun
+  pull: always
+  image: plugins/docker:latest
+  settings:
+    context: v1.7
+    dockerfile: v1.7/Dockerfile.arm32v6
+    dry_run: true
+    repo: webhippie/golang
+    tags: 1.7-arm32v6
+  when:
+    event:
+    - pull_request
+
+- name: publish
+  pull: always
+  image: plugins/docker:latest
+  settings:
+    context: v1.7
+    dockerfile: v1.7/Dockerfile.arm32v6
+    password:
+      from_secret: docker_password
+    repo: webhippie/golang
+    tags: 1.7-arm32v6
+    username:
+      from_secret: docker_username
+  when:
+    event:
+    - push
+
+trigger:
+  ref:
+  - refs/heads/master
+  - "refs/pull/**"
+
+---
+kind: pipeline
+name: arm64v8-1.7
+
+platform:
+  os: linux
+  arch: arm64
+
+steps:
+- name: dryrun
+  pull: always
+  image: plugins/docker:latest
+  settings:
+    context: v1.7
+    dockerfile: v1.7/Dockerfile.arm64v8
+    dry_run: true
+    repo: webhippie/golang
+    tags: 1.7-arm64v8
+  when:
+    event:
+    - pull_request
+
+- name: publish
+  pull: always
+  image: plugins/docker:latest
+  settings:
+    context: v1.7
+    dockerfile: v1.7/Dockerfile.arm64v8
+    password:
+      from_secret: docker_password
+    repo: webhippie/golang
+    tags: 1.7-arm64v8
+    username:
+      from_secret: docker_username
+  when:
+    event:
+    - push
+
+trigger:
+  ref:
+  - refs/heads/master
+  - "refs/pull/**"
+
+---
+kind: pipeline
+name: manifest-1.7
+
+platform:
+  os: linux
+  arch: amd64
+
+steps:
+- name: manifest
+  pull: always
+  image: plugins/manifest:1
+  settings:
+    ignore_missing: true
+    password:
+      from_secret: docker_password
+    spec: 1.7/manifest.tmpl
+    username:
+      from_secret: docker_username
+
+trigger:
+  ref:
+  - refs/heads/master
+
+depends_on:
+- amd64-1.7
+- arm32v6-1.7
+- arm64v8-1.7
+
+---
+kind: pipeline
+name: amd64-1.6
+
+platform:
+  os: linux
+  arch: amd64
+
+steps:
+- name: dryrun
+  pull: always
+  image: plugins/docker:latest
+  settings:
+    context: v1.6
+    dockerfile: v1.6/Dockerfile.amd64
+    dry_run: true
+    repo: webhippie/golang
+    tags: 1.6-amd64
+  when:
+    event:
+    - pull_request
+
+- name: publish
+  pull: always
+  image: plugins/docker:latest
+  settings:
+    context: v1.6
+    dockerfile: v1.6/Dockerfile.amd64
+    password:
+      from_secret: docker_password
+    repo: webhippie/golang
+    tags: 1.6-amd64
+    username:
+      from_secret: docker_username
+  when:
+    event:
+    - push
+
+trigger:
+  ref:
+  - refs/heads/master
+  - "refs/pull/**"
+
+---
+kind: pipeline
+name: arm32v6-1.6
+
+platform:
+  os: linux
+  arch: arm
+
+steps:
+- name: dryrun
+  pull: always
+  image: plugins/docker:latest
+  settings:
+    context: v1.6
+    dockerfile: v1.6/Dockerfile.arm32v6
+    dry_run: true
+    repo: webhippie/golang
+    tags: 1.6-arm32v6
+  when:
+    event:
+    - pull_request
+
+- name: publish
+  pull: always
+  image: plugins/docker:latest
+  settings:
+    context: v1.6
+    dockerfile: v1.6/Dockerfile.arm32v6
+    password:
+      from_secret: docker_password
+    repo: webhippie/golang
+    tags: 1.6-arm32v6
+    username:
+      from_secret: docker_username
+  when:
+    event:
+    - push
+
+trigger:
+  ref:
+  - refs/heads/master
+  - "refs/pull/**"
+
+---
+kind: pipeline
+name: arm64v8-1.6
+
+platform:
+  os: linux
+  arch: arm64
+
+steps:
+- name: dryrun
+  pull: always
+  image: plugins/docker:latest
+  settings:
+    context: v1.6
+    dockerfile: v1.6/Dockerfile.arm64v8
+    dry_run: true
+    repo: webhippie/golang
+    tags: 1.6-arm64v8
+  when:
+    event:
+    - pull_request
+
+- name: publish
+  pull: always
+  image: plugins/docker:latest
+  settings:
+    context: v1.6
+    dockerfile: v1.6/Dockerfile.arm64v8
+    password:
+      from_secret: docker_password
+    repo: webhippie/golang
+    tags: 1.6-arm64v8
+    username:
+      from_secret: docker_username
+  when:
+    event:
+    - push
+
+trigger:
+  ref:
+  - refs/heads/master
+  - "refs/pull/**"
+
+---
+kind: pipeline
+name: manifest-1.6
+
+platform:
+  os: linux
+  arch: amd64
+
+steps:
+- name: manifest
+  pull: always
+  image: plugins/manifest:1
+  settings:
+    ignore_missing: true
+    password:
+      from_secret: docker_password
+    spec: 1.6/manifest.tmpl
+    username:
+      from_secret: docker_username
+
+trigger:
+  ref:
+  - refs/heads/master
+
+depends_on:
+- amd64-1.6
+- arm32v6-1.6
+- arm64v8-1.6
+
+---
+kind: pipeline
+name: microbadger-update
+
+platform:
+  os: linux
+  arch: amd64
+
+steps:
+- name: microbadger
+  pull: always
+  image: plugins/webhook:1
+  settings:
+    url:
+      from_secret: microbadger_url
+
+trigger:
+  ref:
+  - refs/heads/master
+
+depends_on:
+- manifest-latest
+- manifest-1.12
+- manifest-1.11
+- manifest-1.10
+- manifest-1.9
+- manifest-1.8
+- manifest-1.7
+- manifest-1.6
+
+...
