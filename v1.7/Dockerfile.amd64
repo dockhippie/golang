@@ -17,11 +17,15 @@ COPY ./overlay ./overlay-amd64 /
 
 RUN apk update && \
   apk upgrade && \
-  apk add build-base git git-lfs mercurial bzr go && \
+  apk add gcc musl-dev openssl openssh-client make git git-lfs mercurial bzr go && \
   export GOROOT_BOOTSTRAP="$(go env GOROOT)" && \
+  export GOOS="$(go env GOOS)" && \
+  export GOARCH="$(go env GOARCH)" && \
+  export GOHOSTOS="$(go env GOHOSTOS)" && \
+  export GOHOSTARCH="$(go env GOHOSTARCH)" && \
   curl -sLo - https://golang.org/dl/go1.7.6.src.tar.gz | tar -xzf - -C /usr/local && \
   cd /usr/local/go/src && \
-  patch -p2 -i /tmp/default-buildmode-pie.patch && \
   bash make.bash && \
+  rm -rf /usr/local/go/pkg/bootstrap /usr/local/go/pkg/obj && \
   apk del go && \
   rm -rf /var/cache/apk/*
