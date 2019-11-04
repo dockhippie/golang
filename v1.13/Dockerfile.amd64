@@ -1,8 +1,8 @@
-FROM webhippie/alpine:latest-arm64v8
+FROM webhippie/alpine:latest
 
 LABEL maintainer="Thomas Boerger <thomas@webhippie.de>" \
   org.label-schema.name="Golang" \
-  org.label-schema.version="latest" \
+  org.label-schema.version="1.12" \
   org.label-schema.vendor="Thomas Boerger" \
   org.label-schema.schema-version="1.0"
 
@@ -14,7 +14,7 @@ ENV GOPATH /srv/app
 ENV PATH /srv/app/bin:/usr/local/go/bin:${PATH}
 ENV GO111MODULE auto
 
-COPY ./overlay ./overlay-arm64v8 /
+COPY ./overlay ./overlay-amd64 /
 
 RUN apk update && \
   apk upgrade && \
