@@ -16,7 +16,7 @@ ENV GO111MODULE auto
 
 RUN apk update && \
   apk upgrade && \
-  apk add gcc musl-dev openssl openssh-client make git git-lfs mercurial bzr go protoc && \
+  apk add gcc musl-dev openssl openssh-client make git git-lfs mercurial bzr go protoc protoc-dev && \
   rm -rf /var/cache/apk/*
 
 COPY ./overlay ./overlay-arm64v8 /
