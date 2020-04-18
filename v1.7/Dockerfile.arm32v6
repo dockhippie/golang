@@ -1,3 +1,8 @@
+FROM webhippie/alpine:latest-arm32v6 as download
+RUN cd /tmp && \
+  curl -sSL -o upx.tar.xz https://github.com/upx/upx/releases/download/v3.96/upx-3.96-arm_linux.tar.xz && \
+  tar -xvf upx.tar.xz --strip-components=1
+
 FROM webhippie/alpine:latest-arm32v6
 
 LABEL maintainer="Thomas Boerger <thomas@webhippie.de>" \
@@ -14,6 +19,7 @@ ENV GOPATH /srv/app
 ENV PATH /srv/app/bin:/usr/local/go/bin:${PATH}
 
 COPY ./overlay ./overlay-arm32v6 /
+COPY --from=download /tmp/upx /usr/bin/upx
 
 RUN apk update && \
   apk upgrade && \
