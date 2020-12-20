@@ -3,9 +3,7 @@
         "docker:pinDigests",
         "default:automergeDigest"
     ],
-    "ignorePaths": [
-        "archive/"
-    ],
+
     "labels": [
         "renovate"
     ],
