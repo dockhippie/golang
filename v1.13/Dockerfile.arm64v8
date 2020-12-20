@@ -1,4 +1,5 @@
 FROM webhippie/alpine:latest-arm64v8 as download
+
 RUN cd /tmp && \
   curl -sSL -o upx.tar.xz https://github.com/upx/upx/releases/download/v3.96/upx-3.96-arm64_linux.tar.xz && \
   tar -xvf upx.tar.xz --strip-components=1
@@ -12,8 +13,6 @@ LABEL maintainer="Thomas Boerger <thomas@webhippie.de>" \
   org.label-schema.schema-version="1.0"
 
 WORKDIR /srv/app
-ENTRYPOINT ["/usr/bin/entrypoint"]
-CMD ["bash"]
 
 ENV GOPATH /srv/app
 ENV PATH /srv/app/bin:/usr/local/go/bin:${PATH}
