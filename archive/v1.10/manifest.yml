@@ -1,0 +1,16 @@
+image: webhippie/golang:1.10
+manifests:
+  - image: webhippie/golang:1.10-amd64
+    platform:
+      architecture: amd64
+      os: linux
+  - image: webhippie/golang:1.10-arm64v8
+    platform:
+      architecture: arm64
+      os: linux
+      variant: v8
+  - image: webhippie/golang:1.10-arm32v6
+    platform:
+      architecture: arm
+      os: linux
+      variant: v6

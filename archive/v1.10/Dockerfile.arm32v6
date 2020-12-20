@@ -1,0 +1,28 @@
+FROM webhippie/alpine:latest-arm32v6
+
+LABEL maintainer="Thomas Boerger <thomas@webhippie.de>" \
+  org.opencontainers.image.title="Golang" \
+  org.opencontainers.image.vendor="Thomas Boerger"
+
+WORKDIR /srv/app
+
+ENV GOPATH /srv/app
+ENV PATH /srv/app/bin:/usr/local/go/bin:${PATH}
+
+COPY ./overlay ./overlay-arm32v6 /
+
+RUN apk update && \
+  apk upgrade && \
+  apk add gcc musl-dev openssl openssh-client make git git-lfs mercurial go protoc protobuf-dev binutils-gold && \
+  export GOROOT_BOOTSTRAP="$(go env GOROOT)" && \
+  export GOOS="$(go env GOOS)" && \
+  export GOARCH="$(go env GOARCH)" && \
+  export GOHOSTOS="$(go env GOHOSTOS)" && \
+  export GOHOSTARCH="$(go env GOHOSTARCH)" && \
+  export GOARM="6" && \
+  curl -sLo - https://golang.org/dl/go1.10.8.src.tar.gz | tar -xzf - -C /usr/local && \
+  cd /usr/local/go/src && \
+  bash make.bash && \
+  rm -rf /usr/local/go/pkg/bootstrap /usr/local/go/pkg/obj && \
+  apk del go && \
+  rm -rf /var/cache/apk/*
