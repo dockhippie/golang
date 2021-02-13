@@ -1,4 +1,4 @@
-FROM webhippie/alpine:latest-arm64v8@sha256:845820e7365fc9b454e140dfb9034bc13c029bf00b308380428b2446ee074016
+FROM webhippie/alpine:latest-arm64v8@sha256:a060cd6db41df7e36f8832c0923d753b7f27ddc440d15886a81331c7c1f2ce28
 
 LABEL maintainer="Thomas Boerger <thomas@webhippie.de>" \
   org.opencontainers.image.title="Golang" \
