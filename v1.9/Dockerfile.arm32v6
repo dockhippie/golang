@@ -20,6 +20,7 @@ RUN apk update && \
   export GOHOSTOS="$(go env GOHOSTOS)" && \
   export GOHOSTARCH="$(go env GOHOSTARCH)" && \
   export GOARM="6" && \
+  go env -w GO111MODULE=auto && \
   curl -sLo - https://golang.org/dl/go1.9.7.src.tar.gz | tar -xzf - -C /usr/local && \
   cd /usr/local/go/src && \
   bash make.bash && \

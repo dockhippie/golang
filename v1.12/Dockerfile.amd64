@@ -20,6 +20,7 @@ RUN apk update && \
   export GOARCH="$(go env GOARCH)" && \
   export GOHOSTOS="$(go env GOHOSTOS)" && \
   export GOHOSTARCH="$(go env GOHOSTARCH)" && \
+  go env -w GO111MODULE=auto && \
   curl -sLo - https://golang.org/dl/go1.12.17.src.tar.gz | tar -xzf - -C /usr/local && \
   cd /usr/local/go/src && \
   bash make.bash && \
