@@ -11,7 +11,7 @@ ENV UPX_VERSION=3.96
 
 RUN apk update && \
   apk upgrade && \
-  apk add xz gcc musl-dev openssl openssh-client make git git-lfs mercurial go protoc protobuf-dev binutils-gold && \
+  apk add gcc musl-dev openssl openssh-client make git git-lfs mercurial go protoc protobuf-dev binutils-gold && \
   curl -sSLo- https://github.com/upx/upx/releases/download/v${UPX_VERSION}/upx-${UPX_VERSION}-amd64_linux.tar.xz | tar -xJv --strip 1 -C /tmp && \
   mv /tmp/upx /usr/bin/upx && \
   rm -rf /var/cache/apk/* /tmp/*
