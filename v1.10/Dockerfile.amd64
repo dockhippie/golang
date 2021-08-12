@@ -1,33 +1,32 @@
-FROM webhippie/alpine:latest-amd64
+FROM webhippie/alpine:3.13-amd64
 
 WORKDIR /srv/app
 
 ENV GOPATH /srv/app
 ENV PATH /srv/app/bin:/usr/local/go/bin:${PATH}
-ENV GO111MODULE auto
 
 COPY ./overlay /
 
 # renovate: datasource=github-tags depName=golang/go
-ENV GOLANG_VERSION=1.15.6
+ENV GOLANG_VERSION=1.10.8
 
 # renovate: datasource=github-releases depName=upx/upx
 ENV UPX_VERSION=3.96
 
 RUN apk update && \
   apk upgrade && \
-  apk add xz gcc musl-dev openssl openssh-client make git git-lfs mercurial go protoc protobuf-dev binutils-gold && \
+  apk add xz gcc musl-dev openssl openssh-client make git git-lfs mercurial go-bootstrap protoc protobuf-dev binutils-gold && \
   export GOROOT_BOOTSTRAP="$(go env GOROOT)" && \
   export GOOS="$(go env GOOS)" && \
   export GOARCH="$(go env GOARCH)" && \
   export GOHOSTOS="$(go env GOHOSTOS)" && \
   export GOHOSTARCH="$(go env GOHOSTARCH)" && \
-  go env -w GO111MODULE=auto && \
+  export GO111MODULE=off && \
   curl -sLo - https://golang.org/dl/go${GOLANG_VERSION}.src.tar.gz | tar -xzf - -C /usr/local && \
   cd /usr/local/go/src && \
   bash make.bash && \
   rm -rf /usr/local/go/pkg/bootstrap /usr/local/go/pkg/obj && \
-  apk del go && \
+  apk del go-bootstrap && \
   curl -sSLo- https://github.com/upx/upx/releases/download/v${UPX_VERSION}/upx-${UPX_VERSION}-amd64_linux.tar.xz | tar -xJv --strip 1 -C /tmp && \
   mv /tmp/upx /usr/bin/upx && \
   rm -rf /var/cache/apk/* /tmp/*
