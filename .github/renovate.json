@@ -1,23 +1,36 @@
 {
+    "$schema": "https://docs.renovatebot.com/renovate-schema.json",
     "extends": [
+        "github>webhippie/renovate:docker",
         "docker:pinDigests",
         "default:automergeDigest"
     ],
     "ignorePaths": [
         "archive/"
     ],
-    "labels": [
-        "renovate"
-    ],
     "packageRules": [{
-        "datasources": [
-            "docker"
-        ],
-        "updateTypes": [
-            "major",
-            "minor",
-            "patch"
-        ],
-        "enabled": false
-    }]
+            "datasources": [
+                "docker"
+            ],
+            "updateTypes": [
+                "major",
+                "minor"
+            ],
+            "enabled": false
+        },
+        {
+            "description": "Strip go prefix from versions",
+            "groupName": "version prefix",
+            "matchDatasources": [
+                "github-tags"
+            ],
+            "updateTypes": [
+                "patch"
+            ],
+            "matchPackageNames": [
+                "golang/go"
+            ],
+            "extractVersion": "^go(?<version>.*)$"
+        }
+    ]
 }
