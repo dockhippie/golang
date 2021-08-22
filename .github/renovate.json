@@ -9,6 +9,16 @@
         "archive/"
     ],
     "packageRules": [{
+            "datasources": [
+                "docker"
+            ],
+            "updateTypes": [
+                "major",
+                "minor"
+            ],
+            "enabled": false
+        },
+        {
             "description": "Update only golang patch version",
             "datasources": [
                 "github-tags"
