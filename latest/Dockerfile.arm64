@@ -9,7 +9,7 @@ ENV GO111MODULE auto
 COPY ./overlay /
 
 # renovate: datasource=github-tags depName=golang/go
-ENV GOLANG_VERSION=1.18
+ENV GOLANG_VERSION=1.18.3
 
 # renovate: datasource=github-releases depName=upx/upx
 ENV UPX_VERSION=3.96
