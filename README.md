@@ -3,7 +3,7 @@
 [![Docker Build](https://github.com/dockhippie/golang/actions/workflows/docker.yml/badge.svg)](https://github.com/dockhippie/golang/actions/workflows/docker.yml) [![GitHub Repo](https://img.shields.io/badge/github-repo-yellowgreen)](https://github.com/dockhippie/golang)
 
 These are docker images for [Golang][upstream] running on our
-[AlpineLinux image][parent].
+[Alpine Linux image][parent].
 
 ## Versions
 
