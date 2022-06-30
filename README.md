@@ -1,20 +1,23 @@
 # golang
 
-[![Docker Build](https://github.com/dockhippie/golang/workflows/docker/badge.svg)](https://github.com/dockhippie/golang/actions?query=workflow%3Adocker) [![Readme Build](https://github.com/dockhippie/golang/workflows/readme/badge.svg)](https://github.com/dockhippie/golang/actions?query=workflow%3Areadme) [![Docker Size](https://img.shields.io/docker/image-size/webhippie/golang/latest)](#) [![Docker Pulls](https://img.shields.io/docker/pulls/webhippie/golang)](https://hub.docker.com/r/webhippie/golang) [![GitHub Repo](https://img.shields.io/badge/github-repo-yellowgreen)](https://github.com/dockhippie/golang)
+[![Docker Build](https://github.com/dockhippie/golang/actions/workflows/docker.yml/badge.svg)](https://github.com/dockhippie/golang/actions/workflows/docker.yml) [![GitHub Repo](https://img.shields.io/badge/github-repo-yellowgreen)](https://github.com/dockhippie/golang)
 
-These are docker images for [Golang](https://golang.org/) running on our [Alpine Linux image](https://github.com/dockhippie/alpine).
+These are docker images for [Golang][upstream] running on our
+[AlpineLinux image][parent].
 
 ## Versions
 
-For the available versions please look at [Docker Hub](https://hub.docker.com/r/webhippie/golang/tags) or [Quay](https://quay.io/repository/webhippie/golang?tab=tags) or check the existing folders within the [GitHub repository](https://github.com/dockhippie/golang).
+For the available versions please look at [Docker Hub][dockerhub] or
+[Quay][quayio] or check the existing folders within the
+[GitHub repository][github].
 
 ## Volumes
 
-* /srv/app
+*  /srv/app
 
 ## Ports
 
-* None
+*  None
 
 ## Available environment variables
 
@@ -43,3 +46,9 @@ MIT
 ```console
 Copyright (c) 2015 Thomas Boerger <http://www.webhippie.de>
 ```
+
+[upstream]: https://golang.org
+[parent]: https://github.com/dockhippie/alpine
+[dockerhub]: https://hub.docker.com/r/webhippie/golang/tags
+[quayio]: https://quay.io/repository/webhippie/golang?tab=tags
+[github]: https://github.com/dockhippie/golang
