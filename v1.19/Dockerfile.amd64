@@ -1,4 +1,4 @@
-FROM webhippie/alpine:latest-arm64@sha256:e931767e6f9c9b53f4f70b5373ed9c5616e639d0d7ddde1d351e750dc2a03ed2
+FROM webhippie/alpine:latest-amd64@sha256:70823ba293ecd24e536d8da0d20854b9afed1d21fd2715ac7bef620af0161fd6
 
 WORKDIR /srv/app
 
@@ -22,11 +22,12 @@ RUN apk update && \
   export GOARCH="$(go env GOARCH)" && \
   export GOHOSTOS="$(go env GOHOSTOS)" && \
   export GOHOSTARCH="$(go env GOHOSTARCH)" && \
+  go env -w GO111MODULE=auto && \
   curl -sLo - https://golang.org/dl/go${GOLANG_VERSION}.src.tar.gz | tar -xzf - -C /usr/local && \
   cd /usr/local/go/src && \
   bash make.bash && \
   rm -rf /usr/local/go/pkg/bootstrap /usr/local/go/pkg/obj && \
   apk del go && \
-  curl -sSLo- https://github.com/upx/upx/releases/download/v${UPX_VERSION}/upx-${UPX_VERSION}-arm64_linux.tar.xz | tar -xJv --strip 1 -C /tmp && \
+  curl -sSLo- https://github.com/upx/upx/releases/download/v${UPX_VERSION}/upx-${UPX_VERSION}-amd64_linux.tar.xz | tar -xJv --strip 1 -C /tmp && \
   mv /tmp/upx /usr/bin/upx && \
   rm -rf /var/cache/apk/* /tmp/*
