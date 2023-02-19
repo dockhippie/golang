@@ -16,9 +16,6 @@ name: edge
       - .github/workflows/edge.yml
   workflow_dispatch:
 
-concurrency:
-  group: edge
-
 jobs:
   docker:
     runs-on: ubuntu-latest
