@@ -55,5 +55,8 @@
             ],
             "extractVersion": "^go(?<version>.*)$"
         }
+    ],
+    "ignoreDeps": [
+        "docker/build-push-action"
     ]
 }
