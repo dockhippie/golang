@@ -1,4 +1,4 @@
-FROM webhippie/alpine:3.13-arm
+FROM ghcr.io/dockhippie/alpine:3.13-arm
 
 WORKDIR /srv/app
 
