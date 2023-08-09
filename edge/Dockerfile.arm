@@ -7,7 +7,7 @@ ENV PATH /srv/app/bin:${PATH}
 ENV GO111MODULE auto
 
 # renovate: datasource=github-releases depName=upx/upx
-ENV UPX_VERSION=4.0.2
+ENV UPX_VERSION=4.1.0
 
 RUN apk update && \
   apk upgrade && \
