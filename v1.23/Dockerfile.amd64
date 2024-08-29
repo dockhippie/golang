@@ -1,0 +1,33 @@
+FROM ghcr.io/dockhippie/alpine:latest-amd64@sha256:65c782c5fa3f916affd9c3e638c6fdc6c184d0e33e774f12cf4f50c1950762be
+
+WORKDIR /srv/app
+
+ENV GOPATH /srv/app
+ENV PATH /srv/app/bin:/usr/local/go/bin:${PATH}
+ENV GO111MODULE auto
+
+COPY ./overlay /
+
+# renovate: datasource=github-tags depName=golang/go
+ENV GOLANG_VERSION=1.23.0
+
+# renovate: datasource=github-releases depName=upx/upx
+ENV UPX_VERSION=4.2.4
+
+RUN apk update && \
+  apk upgrade && \
+  apk add gcc musl-dev openssl openssh-client make git git-lfs mercurial go protoc protobuf-dev binutils-gold && \
+  export GOROOT_BOOTSTRAP="$(go env GOROOT)" && \
+  export GOOS="$(go env GOOS)" && \
+  export GOARCH="$(go env GOARCH)" && \
+  export GOHOSTOS="$(go env GOHOSTOS)" && \
+  export GOHOSTARCH="$(go env GOHOSTARCH)" && \
+  go env -w GO111MODULE=auto && \
+  curl -sLo - https://golang.org/dl/go${GOLANG_VERSION}.src.tar.gz | tar -xzf - -C /usr/local && \
+  cd /usr/local/go/src && \
+  bash make.bash && \
+  rm -rf /usr/local/go/pkg/bootstrap /usr/local/go/pkg/obj && \
+  apk del go && \
+  curl -sSLo- https://github.com/upx/upx/releases/download/v${UPX_VERSION}/upx-${UPX_VERSION}-amd64_linux.tar.xz | tar -xJv --strip 1 -C /tmp && \
+  mv /tmp/upx /usr/bin/upx && \
+  rm -rf /var/cache/apk/* /tmp/*
