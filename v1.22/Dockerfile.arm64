@@ -12,7 +12,7 @@ COPY ./overlay /
 ENV GOLANG_VERSION=1.22.6
 
 # renovate: datasource=github-releases depName=upx/upx
-ENV UPX_VERSION=5.0.1
+ENV UPX_VERSION=5.0.2
 
 RUN apk update && \
   apk upgrade && \
