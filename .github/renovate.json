@@ -6,10 +6,10 @@
     "packageRules": [
         {
             "description": "Update tags without merge",
-            "datasources": [
+            "matchDatasources": [
                 "github-tags"
             ],
-            "updateTypes": [
+            "matchUpdateTypes": [
                 "major",
                 "minor"
             ],
@@ -21,10 +21,10 @@
         },
         {
             "description": "Update tags without merge",
-            "datasources": [
+            "matchDatasources": [
                 "github-tags"
             ],
-            "updateTypes": [
+            "matchUpdateTypes": [
                 "patch"
             ],
             "enabled": true,
@@ -36,7 +36,7 @@
         {
             "description": "Strip go prefix from versions",
             "groupName": "version prefix",
-            "matchDatasources": [
+            "matchmatchDatasources": [
                 "github-tags"
             ],
             "matchPackageNames": [
