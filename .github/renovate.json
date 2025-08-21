@@ -36,7 +36,7 @@
         {
             "description": "Strip go prefix from versions",
             "groupName": "version prefix",
-            "matchmatchDatasources": [
+            "matchDatasources": [
                 "github-tags"
             ],
             "matchPackageNames": [
