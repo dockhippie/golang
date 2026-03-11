@@ -1,7 +1,7 @@
 ---
 repository:
   name: golang
-  description: Docker images for golang
+  description: Docker images for Golang
   topics: docker, image
 
   private: false
